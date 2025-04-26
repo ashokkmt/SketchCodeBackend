@@ -36,6 +36,14 @@ Do NOT:
 Only output the final code logic, nothing else.
 `;
 
+
+function cleanCodeBlock(text) {
+  let cleaned = text.replace(/^```[a-zA-Z]*\s*/, '');
+  cleaned = cleaned.replace(/```["']?\s*$/, '');
+  cleaned = cleaned.trim();
+  return cleaned;
+}
+
 app.post('/recieve', async (req, res) => {
   try {
     // console.log(req.body.data);
@@ -53,13 +61,13 @@ app.post('/recieve', async (req, res) => {
     const labels = data.map(node => node.label?.toLowerCase());
     if (!labels.includes("start") || !labels.includes("stop")) {
       console.log('Invalid data: Start or Stop node missing.');
-      return res.json({ error: "Invalid flowchart data." });
+      return res.json({ error: "Start or Stop node missing." });
     }
 
     // Prepare Gemini content
     const contents = [
       createUserContent([
-        `Write code in ${language.name}.`,
+        `Write code in ${language.name}. Do not give output in .md format.`,
         JSON.stringify(data)
       ])
     ];
@@ -77,7 +85,11 @@ app.post('/recieve', async (req, res) => {
     });
 
     console.log("Gemini Function Called\n");
-    console.log(response.text);
+
+    const rawText = response.text;
+    const cleanText = cleanCodeBlock(rawText);
+    console.log(cleanText);
+
 
     // Save request body to output.json
     fs.writeFile('output.json', JSON.stringify(req.body, null, 2), (err) => {
