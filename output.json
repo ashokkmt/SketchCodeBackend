@@ -1,0 +1,17 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "label": "Node 1",
+      "shape": "rectangle",
+      "position": {
+        "x": 453,
+        "y": 132
+      },
+      "connections": []
+    }
+  ],
+  "language": {
+    "name": "c++"
+  }
+}
