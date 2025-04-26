@@ -2,11 +2,47 @@
   "data": [
     {
       "id": "1",
-      "label": "Node 1",
+      "label": "Start",
+      "shape": "circle",
+      "position": {
+        "x": 293,
+        "y": 141.4000015258789
+      },
+      "connections": [
+        "2"
+      ]
+    },
+    {
+      "id": "2",
+      "label": "Read A",
       "shape": "rectangle",
       "position": {
-        "x": 453,
-        "y": 132
+        "x": 320,
+        "y": 256.4000015258789
+      },
+      "connections": [
+        "3"
+      ]
+    },
+    {
+      "id": "3",
+      "label": "Print A",
+      "shape": "parallelogram",
+      "position": {
+        "x": 318,
+        "y": 376.4000015258789
+      },
+      "connections": [
+        "4"
+      ]
+    },
+    {
+      "id": "4",
+      "label": "Stop",
+      "shape": "circle",
+      "position": {
+        "x": 307,
+        "y": 507.4000015258789
       },
       "connections": []
     }

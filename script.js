@@ -33,7 +33,7 @@ Do NOT:
 Only output the final code logic, nothing else.
 `;
 
-app.post('/receive', async (req, res) => {
+app.post('/recieve', async (req, res) => {
   try {
     console.log(req.body.data);
     console.log(req.body.language);
