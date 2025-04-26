@@ -101,7 +101,7 @@ app.post('/recieve', async (req, res) => {
     });
 
     // Respond with generated text
-    return res.json({ result: response.text });
+    return res.json({ result: cleanText });
 
   } catch (error) {
     console.error("Error:", error);
