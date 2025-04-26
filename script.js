@@ -5,13 +5,16 @@ import {
   GoogleGenAI,
   createUserContent
 } from "@google/genai";
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const ai = new GoogleGenAI({ apiKey: "AIzaSyBn1tXZE8OlIpKAPLlD5E8dfL21bQz3J_k" });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
 
 const systeminstruct = `
 You are a professional coder. I will give you flowchart data in JSON format. Your task is to understand the flow and write only the final code in the specified language.
@@ -35,7 +38,7 @@ Only output the final code logic, nothing else.
 
 app.post('/recieve', async (req, res) => {
   try {
-    console.log(req.body.data);
+    // console.log(req.body.data);
     console.log(req.body.language);
 
     const { data, language } = req.body;
