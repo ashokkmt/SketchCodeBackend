@@ -44,7 +44,7 @@ function cleanCodeBlock(text) {
   return cleaned;
 }
 
-app.post('/recieve', async (req, res) => {
+app.post('/flowrecieve', async (req, res) => {
   try {
     // console.log(req.body.data);
     console.log(req.body.language);
@@ -108,6 +108,53 @@ app.post('/recieve', async (req, res) => {
     return res.status(500).json({ error: "Error generating code." });
   }
 });
+
+
+
+
+
+
+
+//////////////////////////////////////////// Algo to Code  Section ///////////////////////////////////////////////////////
+
+const algoInstructions = `
+  this is  the algorigthm write a clean code using this algorigthm.
+  Give Algo can't be found if the algo seems to be either incomplete or Not logical.
+`
+
+app.post("/algorecieve", async (req, res) => {
+  console.log(req.body.algo);
+  console.log(req.body.language);
+
+  const contents = [
+    createUserContent([
+      `Write code in ${req.body.language}. Do not give output in .md format.`,
+      JSON.stringify(req.body.algo)
+    ])
+  ];
+
+  try {
+    const result = await ai.models.generateContent({
+      model: "gemini-2.0-flash",
+      contents: contents,
+      config: {
+        systemInstruction: algoInstructions,
+      },
+    });
+
+    const rawText = result.text;
+    const cleanText = cleanCodeBlock(rawText);
+
+    res.json({
+      data: cleanText
+    });
+
+  } catch (err) {
+    console.error("Error while generating content:", err.message);
+    res.status(500).json({ error: "Failed to generate code" });
+  }
+});
+
 
 // Start server
 app.listen(3000, () => {
